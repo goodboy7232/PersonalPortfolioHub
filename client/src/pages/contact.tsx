@@ -1,14 +1,14 @@
 import Navigation from "@/components/navigation";
-import HeroSection from "@/components/hero-section";
+import ContactSection from "@/components/contact-section";
 import Footer from "@/components/footer";
 import ChatWidget from "@/components/chat-widget";
 
-export default function Home() {
+export default function Contact() {
   return (
     <div className="min-h-screen">
       <Navigation />
-      <main>
-        <HeroSection />
+      <main className="pt-20">
+        <ContactSection />
       </main>
       <Footer />
       <ChatWidget />
