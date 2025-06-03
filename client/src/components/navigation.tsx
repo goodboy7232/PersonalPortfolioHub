@@ -45,7 +45,7 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
-            <Link href="/contact">
+            <Link href="/proposal">
               <Button className="bg-primary hover:bg-primary/80 text-primary-foreground">
                 Get Free Proposal
               </Button>
@@ -75,7 +75,7 @@ export default function Navigation() {
                     {item.label}
                   </Link>
                 ))}
-                <Link href="/contact" onClick={closeMenu}>
+                <Link href="/proposal" onClick={closeMenu}>
                   <Button className="bg-primary hover:bg-primary/80 text-primary-foreground mt-4">
                     Get Free Proposal
                   </Button>

@@ -170,13 +170,14 @@ export default function Blog() {
                         </div>
                         <span>{post.readTime}</span>
                       </div>
-                      <Button 
-                        variant="ghost" 
-                        className="text-accent hover:text-accent-foreground hover:bg-accent/10 p-0"
-                        onClick={() => window.open(`/blog/${post.id}`, '_blank')}
-                      >
-                        Read More <ArrowRight className="w-4 h-4 ml-1" />
-                      </Button>
+                      <Link href={`/blog/${post.id}`}>
+                        <Button 
+                          variant="ghost" 
+                          className="text-accent hover:text-accent-foreground hover:bg-accent/10 p-0"
+                        >
+                          Read More <ArrowRight className="w-4 h-4 ml-1" />
+                        </Button>
+                      </Link>
                     </CardContent>
                   </Card>
                 </motion.div>

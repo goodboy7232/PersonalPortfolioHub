@@ -163,82 +163,136 @@ export default function About() {
               </motion.div>
 
               <motion.div
-                className="relative"
+                className="space-y-6"
                 initial={{ opacity: 0, x: 30 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
                 viewport={{ once: true }}
               >
-                {/* World Map with Locations */}
-                <div className="relative bg-gradient-to-b from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 rounded-2xl p-8 overflow-hidden">
-                  <svg viewBox="0 0 1000 500" className="w-full h-auto">
+                {/* Office Locations */}
+                <div className="grid md:grid-cols-2 gap-6">
+                  {/* San Francisco Office */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500" 
+                      alt="San Francisco Office"
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+                        <span className="font-bold text-lg">San Francisco, USA</span>
+                      </div>
+                      <p className="text-sm opacity-90">Strategic & Business Operations</p>
+                      <p className="text-xs opacity-75 mt-1">Golden Gate Bridge Area</p>
+                    </div>
+                  </div>
+
+                  {/* Gwalior Office */}
+                  <div className="relative rounded-2xl overflow-hidden shadow-lg">
+                    <img 
+                      src="https://images.unsplash.com/photo-1582407947304-fd86f028f716?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=500" 
+                      alt="Gwalior Office"
+                      className="w-full h-64 object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="absolute bottom-4 left-4 text-white">
+                      <div className="flex items-center space-x-2 mb-2">
+                        <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                        <span className="font-bold text-lg">Gwalior, India</span>
+                      </div>
+                      <p className="text-sm opacity-90">Development & Design Hub</p>
+                      <p className="text-xs opacity-75 mt-1">Historic City of Madhya Pradesh</p>
+                    </div>
+                  </div>
+                </div>
+
+                {/* World Map with Connections */}
+                <div className="relative bg-gradient-to-b from-blue-50 to-blue-100 dark:from-blue-950 dark:to-blue-900 rounded-2xl p-6 overflow-hidden">
+                  <h4 className="text-lg font-semibold mb-4 text-center">Connected Globally</h4>
+                  <svg viewBox="0 0 1000 400" className="w-full h-auto">
                     {/* Simplified World Map */}
                     <defs>
                       <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
                         <path d="M 20 0 L 0 0 0 20" fill="none" stroke="#e2e8f0" strokeWidth="0.5"/>
                       </pattern>
                     </defs>
-                    <rect width="1000" height="500" fill="url(#grid)" opacity="0.3"/>
+                    <rect width="1000" height="400" fill="url(#grid)" opacity="0.3"/>
                     
                     {/* Continents - Simplified shapes */}
                     <g fill="#94a3b8" opacity="0.6">
                       {/* North America */}
-                      <path d="M50 100 Q200 80 350 120 L380 200 Q300 250 150 230 Q80 180 50 100"/>
+                      <path d="M50 80 Q200 60 350 100 L380 180 Q300 220 150 200 Q80 150 50 80"/>
                       {/* Europe */}
-                      <path d="M400 80 Q500 70 550 100 L570 150 Q520 170 450 160 Q400 130 400 80"/>
+                      <path d="M400 60 Q500 50 550 80 L570 130 Q520 150 450 140 Q400 110 400 60"/>
                       {/* Asia */}
-                      <path d="M550 90 Q750 70 900 110 L920 200 Q800 220 650 200 Q550 150 550 90"/>
+                      <path d="M550 70 Q750 50 900 90 L920 180 Q800 200 650 180 Q550 130 550 70"/>
                       {/* Africa */}
-                      <path d="M420 180 Q500 170 580 190 L590 320 Q520 350 460 340 Q420 280 420 180"/>
+                      <path d="M420 160 Q500 150 580 170 L590 300 Q520 330 460 320 Q420 260 420 160"/>
                       {/* South America */}
-                      <path d="M200 280 Q280 270 320 300 L310 420 Q260 450 220 440 Q180 380 200 280"/>
+                      <path d="M200 260 Q280 250 320 280 L310 380 Q260 410 220 400 Q180 360 200 260"/>
                       {/* Australia */}
-                      <path d="M750 350 Q820 340 870 360 L860 390 Q810 400 770 390 Q750 370 750 350"/>
+                      <path d="M750 320 Q820 310 870 330 L860 360 Q810 370 770 360 Q750 340 750 320"/>
                     </g>
 
                     {/* San Francisco Location */}
                     <g>
-                      <circle cx="120" cy="160" r="8" fill="#ef4444" className="animate-pulse"/>
-                      <circle cx="120" cy="160" r="15" fill="none" stroke="#ef4444" strokeWidth="2" opacity="0.5">
+                      <circle cx="120" cy="140" r="8" fill="#ef4444" className="animate-pulse"/>
+                      <circle cx="120" cy="140" r="15" fill="none" stroke="#ef4444" strokeWidth="2" opacity="0.5">
                         <animate attributeName="r" values="15;25;15" dur="2s" repeatCount="indefinite"/>
                         <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite"/>
                       </circle>
-                      <text x="120" y="140" textAnchor="middle" className="text-xs font-semibold fill-current">San Francisco</text>
-                      <text x="120" y="185" textAnchor="middle" className="text-xs fill-current opacity-70">USA</text>
+                      <text x="120" y="125" textAnchor="middle" className="text-xs font-semibold fill-current">San Francisco</text>
                     </g>
 
                     {/* Gwalior Location */}
                     <g>
-                      <circle cx="720" cy="180" r="8" fill="#22c55e" className="animate-pulse"/>
-                      <circle cx="720" cy="180" r="15" fill="none" stroke="#22c55e" strokeWidth="2" opacity="0.5">
+                      <circle cx="720" cy="160" r="8" fill="#22c55e" className="animate-pulse"/>
+                      <circle cx="720" cy="160" r="15" fill="none" stroke="#22c55e" strokeWidth="2" opacity="0.5">
                         <animate attributeName="r" values="15;25;15" dur="2s" repeatCount="indefinite" begin="1s"/>
                         <animate attributeName="opacity" values="0.5;0;0.5" dur="2s" repeatCount="indefinite" begin="1s"/>
                       </circle>
-                      <text x="720" y="160" textAnchor="middle" className="text-xs font-semibold fill-current">Gwalior</text>
-                      <text x="720" y="205" textAnchor="middle" className="text-xs fill-current opacity-70">India</text>
+                      <text x="720" y="145" textAnchor="middle" className="text-xs font-semibold fill-current">Gwalior</text>
                     </g>
 
                     {/* Connection Line */}
-                    <line x1="120" y1="160" x2="720" y2="180" stroke="#6366f1" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
+                    <line x1="120" y1="140" x2="720" y2="160" stroke="#6366f1" strokeWidth="2" strokeDasharray="5,5" opacity="0.6">
                       <animate attributeName="stroke-dashoffset" values="0;10" dur="1s" repeatCount="indefinite"/>
                     </line>
-                  </svg>
 
-                  {/* Location Cards */}
-                  <div className="absolute top-4 right-4 space-y-2">
-                    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-lg border text-sm">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                        <span className="font-medium">San Francisco Hub</span>
+                    {/* Data Flow Animation */}
+                    <circle r="3" fill="#6366f1" opacity="0.8">
+                      <animateMotion dur="3s" repeatCount="indefinite">
+                        <path d="M120 140 Q420 100 720 160"/>
+                      </animateMotion>
+                    </circle>
+                    <circle r="3" fill="#10b981" opacity="0.8">
+                      <animateMotion dur="3s" repeatCount="indefinite" begin="1.5s">
+                        <path d="M720 160 Q420 200 120 140"/>
+                      </animateMotion>
+                    </circle>
+                  </svg>
+                </div>
+
+                {/* Time Zone Info */}
+                <div className="grid md:grid-cols-2 gap-4 mt-4">
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow border">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 bg-red-500 rounded-full"></div>
+                      <div>
+                        <h5 className="font-semibold">San Francisco Hub</h5>
+                        <p className="text-sm text-muted-foreground">PST (UTC-8) • Strategic Operations</p>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">Strategic & Business</p>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 rounded-lg p-3 shadow-lg border text-sm">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                        <span className="font-medium">Gwalior Hub</span>
+                  </div>
+                  <div className="bg-white dark:bg-gray-800 rounded-lg p-4 shadow border">
+                    <div className="flex items-center space-x-3">
+                      <div className="w-4 h-4 bg-green-500 rounded-full"></div>
+                      <div>
+                        <h5 className="font-semibold">Gwalior Hub</h5>
+                        <p className="text-sm text-muted-foreground">IST (UTC+5:30) • Development Center</p>
                       </div>
-                      <p className="text-xs text-muted-foreground mt-1">Development & Design</p>
                     </div>
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { CheckCircle, Download, Rocket } from "lucide-react";
+import { CheckCircle, Rocket } from "lucide-react";
 import { motion } from "framer-motion";
 import { useToast } from "@/hooks/use-toast";
 import Navigation from "@/components/navigation";
@@ -87,12 +87,7 @@ export default function Proposal() {
                       </motion.div>
                     ))}
                     
-                    <div className="pt-6">
-                      <Button className="w-full bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700">
-                        <Download className="w-4 h-4 mr-2" />
-                        Download Sample Proposal
-                      </Button>
-                    </div>
+                    
                   </CardContent>
                 </Card>
               </motion.div>
