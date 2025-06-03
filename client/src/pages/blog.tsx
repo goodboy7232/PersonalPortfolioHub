@@ -7,8 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Calendar, User, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import { useState } from "react";
 
 export default function Blog() {
+  const [visiblePosts, setVisiblePosts] = useState(6);
+  const [selectedCategory, setSelectedCategory] = useState("All");
+  
   const blogPosts = [
     {
       id: 1,
@@ -103,8 +107,16 @@ export default function Blog() {
               {categories.map((category) => (
                 <Button
                   key={category}
-                  variant="secondary"
-                  className="bg-muted hover:bg-accent hover:text-accent-foreground transition-all"
+                  variant={selectedCategory === category ? "default" : "secondary"}
+                  className={`${
+                    selectedCategory === category 
+                      ? "bg-accent text-accent-foreground" 
+                      : "bg-muted hover:bg-accent hover:text-accent-foreground"
+                  } transition-all`}
+                  onClick={() => {
+                    setSelectedCategory(category);
+                    setVisiblePosts(6);
+                  }}
                 >
                   {category}
                 </Button>
@@ -113,7 +125,10 @@ export default function Blog() {
 
             {/* Blog Grid */}
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {blogPosts.map((post, index) => (
+              {blogPosts
+                .filter(post => selectedCategory === "All" || post.category === selectedCategory)
+                .slice(0, visiblePosts)
+                .map((post, index) => (
                 <motion.div
                   key={post.id}
                   initial={{ opacity: 0, y: 30 }}
@@ -155,7 +170,11 @@ export default function Blog() {
                         </div>
                         <span>{post.readTime}</span>
                       </div>
-                      <Button variant="ghost" className="text-accent hover:text-accent-foreground hover:bg-accent/10 p-0">
+                      <Button 
+                        variant="ghost" 
+                        className="text-accent hover:text-accent-foreground hover:bg-accent/10 p-0"
+                        onClick={() => window.open(`/blog/${post.id}`, '_blank')}
+                      >
                         Read More <ArrowRight className="w-4 h-4 ml-1" />
                       </Button>
                     </CardContent>
@@ -165,16 +184,23 @@ export default function Blog() {
             </div>
 
             {/* Load More Button */}
-            <motion.div 
-              className="text-center mt-12"
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.8 }}
-            >
-              <Button variant="outline" size="lg" className="border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                Load More Articles
-              </Button>
-            </motion.div>
+            {blogPosts.filter(post => selectedCategory === "All" || post.category === selectedCategory).length > visiblePosts && (
+              <motion.div 
+                className="text-center mt-12"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.8 }}
+              >
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground"
+                  onClick={() => setVisiblePosts(prev => prev + 6)}
+                >
+                  Load More Articles
+                </Button>
+              </motion.div>
+            )}
           </div>
         </section>
       </main>
