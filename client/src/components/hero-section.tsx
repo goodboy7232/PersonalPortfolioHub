@@ -38,16 +38,10 @@ export default function HeroSection() {
               </Badge>
             </div>
             
-            <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
+            <h1 className="text-3xl lg:text-5xl font-bold leading-tight mb-6">
               Elevate Your{" "}
               <span className="gradient-text relative">
                 Digital Presence
-                <motion.div 
-                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-accent to-primary rounded-full"
-                  initial={{ scaleX: 0 }}
-                  animate={{ scaleX: 1 }}
-                  transition={{ duration: 1, delay: 0.5 }}
-                />
               </span>{" "}
               to New Heights
             </h1>
@@ -87,8 +81,8 @@ export default function HeroSection() {
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             <img 
-              src="https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=800" 
-              alt="Modern web development workspace with multiple monitors showing code"
+              src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2015&q=80" 
+              alt="Professional business analytics dashboard and web development"
               className="rounded-2xl shadow-2xl w-full h-auto transform hover:scale-105 transition-transform duration-500"
             />
             
