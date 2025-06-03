@@ -27,10 +27,16 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <Badge className="inline-flex items-center bg-accent/10 text-accent border-accent/20 mb-6">
-              <Trophy className="w-4 h-4 mr-2" />
-              100+ Websites Delivered
-            </Badge>
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
+              <Badge className="inline-flex items-center bg-accent/10 text-accent border-accent/20">
+                <Trophy className="w-4 h-4 mr-2" />
+                100+ Websites Delivered
+              </Badge>
+              <Badge className="inline-flex items-center bg-green-500/10 text-green-500 border-green-500/20">
+                <Shield className="w-4 h-4 mr-2" />
+                Trusted by 50+ Businesses
+              </Badge>
+            </div>
             
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
               We Build{" "}
@@ -44,14 +50,10 @@ export default function HeroSection() {
               One-stop solution for US businesses. Design, develop & launch with hosting, domain & AI assistant included.
             </p>
             
-            <div className="flex flex-col sm:flex-row gap-4 mb-12">
-              <Button size="lg" className="bg-accent hover:bg-accent/80 text-accent-foreground animate-glow">
+            <div className="flex justify-center mb-12">
+              <Button size="lg" className="bg-accent hover:bg-accent/80 text-accent-foreground animate-glow px-8 py-4 text-lg">
                 <Rocket className="w-5 h-5 mr-2" />
-                Get Free Proposal
-              </Button>
-              <Button variant="outline" size="lg" className="border-border hover:border-accent">
-                <Play className="w-5 h-5 mr-2" />
-                View Live Demos
+                Get Your Free Website Proposal
               </Button>
             </div>
             

@@ -121,6 +121,22 @@ export default function ContactSection() {
                     </Select>
                   </div>
                   <div>
+                    <Label htmlFor="budget">Project Budget</Label>
+                    <Select value={formData.budget} onValueChange={(value) => handleInputChange("budget", value)}>
+                      <SelectTrigger className="bg-background border-border focus:border-accent">
+                        <SelectValue placeholder="Select your budget range" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        <SelectItem value="under-500">Under $500</SelectItem>
+                        <SelectItem value="500-1000">$500 - $1,000</SelectItem>
+                        <SelectItem value="1000-2500">$1,000 - $2,500</SelectItem>
+                        <SelectItem value="2500-5000">$2,500 - $5,000</SelectItem>
+                        <SelectItem value="5000-10000">$5,000 - $10,000</SelectItem>
+                        <SelectItem value="over-10000">Over $10,000</SelectItem>
+                      </SelectContent>
+                    </Select>
+                  </div>
+                  <div>
                     <Label htmlFor="requirements">Project Requirements</Label>
                     <Textarea 
                       id="requirements"
