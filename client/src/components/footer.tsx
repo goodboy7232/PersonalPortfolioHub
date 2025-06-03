@@ -1,7 +1,6 @@
-import { Code, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Code, Phone, Mail, MapPin, Clock, Facebook, Twitter, Instagram, Linkedin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import Logo from "@/components/logo";
 
 export default function Footer() {
