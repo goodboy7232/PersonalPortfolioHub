@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Headphones, Trophy, Rocket, Play } from "lucide-react";
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 export default function HeroSection() {
   return (
@@ -27,16 +28,7 @@ export default function HeroSection() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-6">
-              <Badge className="inline-flex items-center bg-accent/10 text-accent border-accent/20">
-                <Trophy className="w-4 h-4 mr-2" />
-                100+ Websites Delivered
-              </Badge>
-              <Badge className="inline-flex items-center bg-green-500/10 text-green-500 border-green-500/20">
-                <Shield className="w-4 h-4 mr-2" />
-                Trusted by 50+ Businesses
-              </Badge>
-            </div>
+            
             
             <h1 className="text-3xl lg:text-5xl font-bold leading-tight mb-6">
               Elevate Your{" "}
@@ -50,11 +42,31 @@ export default function HeroSection() {
               Premium web solutions that skyrocket your business growth. Modern design, lightning-fast performance, and AI-powered features that convert visitors into loyal customers.
             </p>
             
-            <div className="flex justify-center mb-12">
-              <Button size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white animate-glow px-8 py-4 text-lg shadow-2xl">
-                <Rocket className="w-5 h-5 mr-2" />
-                Launch Your Digital Empire
-              </Button>
+            <div className="flex flex-col sm:flex-row justify-center gap-4 mb-8">
+              <Link to="/proposal">
+                <Button size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white animate-glow px-8 py-4 text-lg shadow-2xl">
+                  <Rocket className="w-5 h-5 mr-2" />
+                  Launch Your Digital Empire
+                </Button>
+              </Link>
+              <Link to="/portfolio">
+                <Button size="lg" variant="outline" className="border-accent text-accent hover:bg-accent hover:text-white px-8 py-4 text-lg">
+                  <Play className="w-5 h-5 mr-2" />
+                  See Live Project
+                </Button>
+              </Link>
+            </div>
+
+            {/* Trust Badges - Moved here */}
+            <div className="flex flex-wrap justify-center lg:justify-start gap-4 mb-12">
+              <Badge className="inline-flex items-center bg-accent/10 text-accent border-accent/20">
+                <Trophy className="w-4 h-4 mr-2" />
+                100+ Websites Delivered
+              </Badge>
+              <Badge className="inline-flex items-center bg-green-500/10 text-green-500 border-green-500/20">
+                <Shield className="w-4 h-4 mr-2" />
+                Trusted by 50+ Businesses
+              </Badge>
             </div>
             
             {/* Trust Badges */}
