@@ -63,7 +63,7 @@ export default function About() {
     <div className="min-h-screen">
       <Navigation />
       <main className="pt-20">
-        {/* Hero Section - About Our Story */}
+        {/* Hero Section */}
         <section className="py-20 bg-gradient-to-br from-background via-muted to-background">
           <div className="container mx-auto px-6">
             <motion.div
@@ -97,7 +97,7 @@ export default function About() {
           </div>
         </section>
 
-        {/* Remote Work Section with World Map */}
+        {/* Remote Work Section */}
         <section className="py-20 bg-muted/50">
           <div className="container mx-auto px-6">
             <motion.div
@@ -113,7 +113,6 @@ export default function About() {
               </p>
             </motion.div>
 
-            {/* World Map Image */}
             <motion.div
               className="max-w-4xl mx-auto mb-12"
               initial={{ opacity: 0, scale: 0.9 }}
@@ -121,14 +120,11 @@ export default function About() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <div className="relative">
-                <img
-                  src="/attached_assets/image_1748979328412.png"
-                  alt="Global Service Coverage - World Map showing Gwalior and San Francisco locations"
-                  className="w-full h-auto rounded-lg shadow-lg"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/10 to-transparent rounded-lg"></div>
-              </div>
+              <img
+                src="/attached_assets/image_1748978346711.png"
+                alt="Global Service Coverage - Gwalior and San Francisco"
+                className="w-full h-auto rounded-lg shadow-lg"
+              />
             </motion.div>
 
             <motion.div
