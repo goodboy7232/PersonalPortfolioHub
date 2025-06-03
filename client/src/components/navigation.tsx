@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import { Menu, Code } from "lucide-react";
 import { Link, useLocation } from "wouter";
+import Logo from "@/components/logo";
 
 export default function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,11 +26,10 @@ export default function Navigation() {
     <nav className="fixed w-full z-50 bg-background/95 backdrop-blur-sm border-b border-border">
       <div className="container mx-auto px-6 py-4">
         <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <Code className="h-8 w-8 text-accent" />
-            <span className="text-xl font-bold gradient-text">Digital High Web</span>
+          <div className="flex items-center">
+            <Logo size="default" />
           </div>
-          
+
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
             {navItems.map((item) => (

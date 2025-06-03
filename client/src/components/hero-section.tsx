@@ -39,21 +39,27 @@ export default function HeroSection() {
             </div>
             
             <h1 className="text-5xl lg:text-7xl font-bold leading-tight mb-6">
-              We Build{" "}
-              <span className="gradient-text">
-                Websites
+              Elevate Your{" "}
+              <span className="gradient-text relative">
+                Digital Presence
+                <motion.div 
+                  className="absolute -bottom-2 left-0 right-0 h-1 bg-gradient-to-r from-accent to-primary rounded-full"
+                  initial={{ scaleX: 0 }}
+                  animate={{ scaleX: 1 }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                />
               </span>{" "}
-              That Convert
+              to New Heights
             </h1>
             
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              One-stop solution for US businesses. Design, develop & launch with hosting, domain & AI assistant included.
+              Premium web solutions that skyrocket your business growth. Modern design, lightning-fast performance, and AI-powered features that convert visitors into loyal customers.
             </p>
             
             <div className="flex justify-center mb-12">
-              <Button size="lg" className="bg-accent hover:bg-accent/80 text-accent-foreground animate-glow px-8 py-4 text-lg">
+              <Button size="lg" className="bg-gradient-to-r from-accent to-primary hover:from-accent/80 hover:to-primary/80 text-white animate-glow px-8 py-4 text-lg shadow-2xl">
                 <Rocket className="w-5 h-5 mr-2" />
-                Get Your Free Website Proposal
+                Launch Your Digital Empire
               </Button>
             </div>
             

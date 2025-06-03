@@ -1,4 +1,8 @@
 import { Code, Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Facebook, Twitter, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import Logo from "@/components/logo";
 
 export default function Footer() {
   const footerLinks = {
@@ -30,13 +34,18 @@ export default function Footer() {
         <div className="grid md:grid-cols-4 gap-8 mb-8">
           {/* Company Info */}
           <div>
+            <div className="mb-6">
+              <div className="mb-4">
+                <Logo size="default" />
+              </div>
+              <p className="text-muted-foreground leading-relaxed">
+                Elevating businesses to digital excellence with cutting-edge web solutions and innovative technology.
+              </p>
+            </div>
             <div className="flex items-center space-x-2 mb-6">
               <Code className="h-8 w-8 text-accent" />
               <span className="text-xl font-bold gradient-text">Digital High Web</span>
             </div>
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              We build websites that convert. Your one-stop solution for custom web development, hosting, and digital growth.
-            </p>
             <div className="flex space-x-4">
               {["facebook", "twitter", "linkedin", "instagram"].map((social) => (
                 <a
