@@ -26,7 +26,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
             <Code className="h-8 w-8 text-accent" />
-            <span className="text-xl font-bold gradient-text">WebCraft Pro</span>
+            <span className="text-xl font-bold gradient-text">Digital High Web</span>
           </div>
           
           {/* Desktop Menu */}

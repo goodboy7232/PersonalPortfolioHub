@@ -32,7 +32,7 @@ export default function Footer() {
           <div>
             <div className="flex items-center space-x-2 mb-6">
               <Code className="h-8 w-8 text-accent" />
-              <span className="text-xl font-bold gradient-text">WebCraft Pro</span>
+              <span className="text-xl font-bold gradient-text">Digital High Web</span>
             </div>
             <p className="text-muted-foreground mb-6 leading-relaxed">
               We build websites that convert. Your one-stop solution for custom web development, hosting, and digital growth.

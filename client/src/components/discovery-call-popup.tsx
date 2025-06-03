@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { X, Calendar, Users, Target, Lightbulb, TrendingUp } from "lucide-react";
 import { motion } from "framer-motion";
@@ -7,13 +7,19 @@ import { Link } from "wouter";
 
 export default function DiscoveryCallPopup() {
   const [isOpen, setIsOpen] = useState(false);
+  const [hasShown, setHasShown] = useState(false);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsOpen(true);
-    }, 3000); // Show popup after 3 seconds
+    const hasPopupShown = localStorage.getItem('discovery-popup-shown');
+    if (!hasPopupShown) {
+      const timer = setTimeout(() => {
+        setIsOpen(true);
+        setHasShown(true);
+        localStorage.setItem('discovery-popup-shown', 'true');
+      }, 3000);
 
-    return () => clearTimeout(timer);
+      return () => clearTimeout(timer);
+    }
   }, []);
 
   const benefits = [
@@ -42,13 +48,9 @@ export default function DiscoveryCallPopup() {
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogContent className="sm:max-w-md bg-background border-border">
+        <DialogTitle className="sr-only">Book a Free Discovery Call</DialogTitle>
+        <DialogDescription className="sr-only">Schedule a consultation to discuss your web development needs</DialogDescription>
         <div className="relative p-6">
-          <button
-            onClick={() => setIsOpen(false)}
-            className="absolute -top-2 -right-2 p-2 rounded-full bg-muted hover:bg-accent/10 transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
 
           <motion.div
             initial={{ scale: 0.9, opacity: 0 }}

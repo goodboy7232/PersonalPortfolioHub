@@ -14,6 +14,7 @@ export default function ContactSection() {
     name: "",
     email: "",
     businessType: "",
+    budget: "",
     requirements: ""
   });
   const { toast } = useToast();
@@ -24,7 +25,7 @@ export default function ContactSection() {
       title: "Thank you for your interest!",
       description: "We will send your proposal within 24 hours.",
     });
-    setFormData({ name: "", email: "", businessType: "", requirements: "" });
+    setFormData({ name: "", email: "", businessType: "", budget: "", requirements: "" });
   };
 
   const handleInputChange = (field: string, value: string) => {
