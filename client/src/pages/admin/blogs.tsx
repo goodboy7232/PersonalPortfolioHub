@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -16,48 +16,19 @@ import { motion } from "framer-motion";
 import AdminLayout from "@/components/admin/admin-layout";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { getAllBlogPosts, deleteBlogPost, updateBlogPost, type BlogPost } from "@/data/blog-data";
 
 export default function AdminBlogs() {
   const { toast } = useToast();
   const [, setLocation] = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [blogs, setBlogs] = useState<BlogPost[]>([]);
 
-  const [blogs, setBlogs] = useState([
-    {
-      id: 1,
-      title: "10 Essential Website Features Every Business Needs in 2024",
-      excerpt: "Discover the must-have features that make websites successful and drive conversions for modern businesses.",
-      author: "John Smith",
-      date: "2024-01-15",
-      category: "Web Design",
-      status: "published",
-      views: 1250,
-      image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-    },
-    {
-      id: 2,
-      title: "How AI Chatbots Can Increase Your Website Conversions by 300%",
-      excerpt: "Learn how implementing AI chatbots on your website can dramatically improve customer engagement and sales.",
-      author: "Sarah Johnson",
-      date: "2024-01-10",
-      category: "AI Technology",
-      status: "published",
-      views: 890,
-      image: "https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-    },
-    {
-      id: 3,
-      title: "Website Speed Optimization: Complete Guide for 2024",
-      excerpt: "Everything you need to know about making your website load faster and improving user experience.",
-      author: "Mike Chen",
-      date: "2024-01-05",
-      category: "Performance",
-      status: "draft",
-      views: 0,
-      image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-    }
-  ]);
+  // Load blogs from the centralized data
+  useEffect(() => {
+    setBlogs(getAllBlogPosts());
+  }, []);
 
   const filteredBlogs = blogs.filter(blog => {
     const matchesSearch = blog.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -68,21 +39,24 @@ export default function AdminBlogs() {
   });
 
   const handleDelete = (id: number) => {
-    setBlogs(prev => prev.filter(blog => blog.id !== id));
-    toast({
-      title: "Blog Post Deleted",
-      description: "The blog post has been removed.",
-    });
+    if (deleteBlogPost(id)) {
+      setBlogs(getAllBlogPosts());
+      toast({
+        title: "Blog Post Deleted",
+        description: "The blog post has been removed.",
+      });
+    }
   };
 
-  const handleStatusChange = (id: number, newStatus: string) => {
-    setBlogs(prev => prev.map(blog => 
-      blog.id === id ? { ...blog, status: newStatus } : blog
-    ));
-    toast({
-      title: "Status Updated",
-      description: `Blog post status changed to ${newStatus}`,
-    });
+  const handleStatusChange = (id: number, newStatus: "draft" | "published") => {
+    const updatedPost = updateBlogPost(id, { status: newStatus });
+    if (updatedPost) {
+      setBlogs(getAllBlogPosts());
+      toast({
+        title: "Status Updated",
+        description: `Blog post status changed to ${newStatus}`,
+      });
+    }
   };
 
   return (
@@ -121,21 +95,21 @@ export default function AdminBlogs() {
                   onClick={() => setStatusFilter("all")}
                   size="sm"
                 >
-                  All
+                  All ({blogs.length})
                 </Button>
                 <Button
                   variant={statusFilter === "published" ? "default" : "outline"}
                   onClick={() => setStatusFilter("published")}
                   size="sm"
                 >
-                  Published
+                  Published ({blogs.filter(b => b.status === "published").length})
                 </Button>
                 <Button
                   variant={statusFilter === "draft" ? "default" : "outline"}
                   onClick={() => setStatusFilter("draft")}
                   size="sm"
                 >
-                  Draft
+                  Draft ({blogs.filter(b => b.status === "draft").length})
                 </Button>
               </div>
             </div>
@@ -178,7 +152,7 @@ export default function AdminBlogs() {
                     </div>
                     <div className="flex items-center">
                       <Calendar className="w-3 h-3 mr-1" />
-                      {blog.date}
+                      {new Date(blog.date).toLocaleDateString()}
                     </div>
                   </div>
                 </CardHeader>
@@ -191,14 +165,14 @@ export default function AdminBlogs() {
                   <div className="flex items-center justify-between mb-4">
                     <Badge variant="outline">{blog.category}</Badge>
                     <span className="text-xs text-muted-foreground">
-                      {blog.views} views
+                      {blog.views || 0} views
                     </span>
                   </div>
 
                   <div className="flex items-center justify-between">
                     <select
                       value={blog.status}
-                      onChange={(e) => handleStatusChange(blog.id, e.target.value)}
+                      onChange={(e) => handleStatusChange(blog.id, e.target.value as "draft" | "published")}
                       className="text-xs border border-border rounded px-2 py-1 bg-background"
                     >
                       <option value="draft">Draft</option>
@@ -206,7 +180,12 @@ export default function AdminBlogs() {
                     </select>
                     
                     <div className="flex space-x-1">
-                      <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                      <Button 
+                        size="sm" 
+                        variant="ghost" 
+                        className="h-8 w-8 p-0"
+                        onClick={() => window.open(`/blog/${blog.id}`, '_blank')}
+                      >
                         <Eye className="w-3 h-3" />
                       </Button>
                       <Button 
@@ -237,6 +216,13 @@ export default function AdminBlogs() {
           <Card>
             <CardContent className="p-12 text-center">
               <p className="text-muted-foreground">No blog posts found matching your criteria.</p>
+              <Button 
+                className="mt-4" 
+                onClick={() => setLocation("/admin/blogs/new")}
+              >
+                <Plus className="w-4 h-4 mr-2" />
+                Create Your First Blog Post
+              </Button>
             </CardContent>
           </Card>
         )}

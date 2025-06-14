@@ -10,12 +10,13 @@ import { motion } from "framer-motion";
 import AdminLayout from "@/components/admin/admin-layout";
 import { useToast } from "@/hooks/use-toast";
 import { useLocation } from "wouter";
+import { getBlogPost, createBlogPost, updateBlogPost, type BlogPost } from "@/data/blog-data";
 
 export default function BlogEditor() {
   const { toast } = useToast();
   const [location, setLocation] = useLocation();
   const isEditing = location.includes("/edit/");
-  const blogId = isEditing ? location.split("/").pop() : null;
+  const blogId = isEditing ? parseInt(location.split("/").pop() || "0") : null;
 
   const [formData, setFormData] = useState({
     title: "",
@@ -23,47 +24,88 @@ export default function BlogEditor() {
     content: "",
     category: "",
     author: "Admin",
-    status: "draft",
-    image: ""
+    status: "draft" as "draft" | "published",
+    image: "",
+    readTime: "5 min read"
   });
 
   useEffect(() => {
     if (isEditing && blogId) {
-      // In a real app, you'd fetch the blog data from your backend
-      // For demo purposes, we'll use mock data
-      const mockBlog = {
-        title: "10 Essential Website Features Every Business Needs in 2024",
-        excerpt: "Discover the must-have features that make websites successful and drive conversions for modern businesses.",
-        content: `<p>In today's digital landscape, having a website isn't enough—you need a website that converts visitors into customers. After analyzing hundreds of successful business websites, we've identified the 10 essential features that every business website needs in 2024.</p>
-
-<h2>1. Mobile-First Responsive Design</h2>
-<p>Over 60% of web traffic now comes from mobile devices. Your website must provide an exceptional experience across all screen sizes.</p>
-
-<h2>2. Clear Value Proposition</h2>
-<p>Visitors should understand what you offer within 5 seconds of landing on your homepage.</p>`,
-        category: "Web Design",
-        author: "John Smith",
-        status: "published",
-        image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=400"
-      };
-      setFormData(mockBlog);
+      const existingPost = getBlogPost(blogId);
+      if (existingPost) {
+        setFormData({
+          title: existingPost.title,
+          excerpt: existingPost.excerpt,
+          content: existingPost.content,
+          category: existingPost.category,
+          author: existingPost.author,
+          status: existingPost.status,
+          image: existingPost.image,
+          readTime: existingPost.readTime
+        });
+      }
     }
   }, [isEditing, blogId]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // In a real app, you'd send this data to your backend
-    toast({
-      title: isEditing ? "Blog Updated" : "Blog Created",
-      description: `Blog post has been ${isEditing ? "updated" : "created"} successfully.`,
-    });
-    
-    setLocation("/admin/blogs");
+    if (!formData.title || !formData.excerpt || !formData.content || !formData.category) {
+      toast({
+        title: "Missing Required Fields",
+        description: "Please fill in all required fields.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    const blogData = {
+      ...formData,
+      date: new Date().toISOString().split('T')[0], // Current date in YYYY-MM-DD format
+    };
+
+    try {
+      if (isEditing && blogId) {
+        const updatedPost = updateBlogPost(blogId, blogData);
+        if (updatedPost) {
+          toast({
+            title: "Blog Updated",
+            description: "Blog post has been updated successfully.",
+          });
+        } else {
+          throw new Error("Failed to update blog post");
+        }
+      } else {
+        createBlogPost(blogData);
+        toast({
+          title: "Blog Created",
+          description: "Blog post has been created successfully.",
+        });
+      }
+      
+      setLocation("/admin/blogs");
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to save blog post. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }));
+  };
+
+  const handlePreview = () => {
+    if (isEditing && blogId) {
+      window.open(`/blog/${blogId}`, '_blank');
+    } else {
+      toast({
+        title: "Save First",
+        description: "Please save the blog post before previewing.",
+      });
+    }
   };
 
   return (
@@ -86,7 +128,7 @@ export default function BlogEditor() {
             </div>
           </div>
           <div className="flex space-x-2">
-            <Button variant="outline">
+            <Button variant="outline" onClick={handlePreview}>
               <Eye className="w-4 h-4 mr-2" />
               Preview
             </Button>
@@ -160,7 +202,7 @@ export default function BlogEditor() {
               <CardContent className="space-y-4">
                 <div>
                   <Label htmlFor="status">Status</Label>
-                  <Select value={formData.status} onValueChange={(value) => handleInputChange("status", value)}>
+                  <Select value={formData.status} onValueChange={(value: "draft" | "published") => handleInputChange("status", value)}>
                     <SelectTrigger>
                       <SelectValue />
                     </SelectTrigger>
@@ -182,7 +224,7 @@ export default function BlogEditor() {
                 </div>
 
                 <div>
-                  <Label htmlFor="category">Category</Label>
+                  <Label htmlFor="category">Category *</Label>
                   <Select value={formData.category} onValueChange={(value) => handleInputChange("category", value)}>
                     <SelectTrigger>
                       <SelectValue placeholder="Select category" />
@@ -196,6 +238,16 @@ export default function BlogEditor() {
                       <SelectItem value="SEO">SEO</SelectItem>
                     </SelectContent>
                   </Select>
+                </div>
+
+                <div>
+                  <Label htmlFor="readTime">Read Time</Label>
+                  <Input
+                    id="readTime"
+                    value={formData.readTime}
+                    onChange={(e) => handleInputChange("readTime", e.target.value)}
+                    placeholder="5 min read"
+                  />
                 </div>
               </CardContent>
             </Card>
@@ -221,6 +273,9 @@ export default function BlogEditor() {
                       src={formData.image} 
                       alt="Preview"
                       className="w-full h-32 object-cover rounded-lg"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                      }}
                     />
                   </div>
                 )}
@@ -235,11 +290,22 @@ export default function BlogEditor() {
               <CardContent className="space-y-4">
                 <div>
                   <Label>Meta Title</Label>
-                  <Input placeholder="SEO title (auto-generated from title)" disabled />
+                  <Input 
+                    value={formData.title} 
+                    disabled 
+                    className="bg-muted"
+                    placeholder="Auto-generated from title" 
+                  />
                 </div>
                 <div>
                   <Label>Meta Description</Label>
-                  <Textarea placeholder="SEO description (auto-generated from excerpt)" rows={3} disabled />
+                  <Textarea 
+                    value={formData.excerpt} 
+                    disabled 
+                    className="bg-muted"
+                    rows={3} 
+                    placeholder="Auto-generated from excerpt" 
+                  />
                 </div>
               </CardContent>
             </Card>

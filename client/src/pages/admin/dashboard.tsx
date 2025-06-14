@@ -17,17 +17,21 @@ import { motion } from "framer-motion";
 import { useLocation } from "wouter";
 import { useToast } from "@/hooks/use-toast";
 import AdminLayout from "@/components/admin/admin-layout";
+import { getBlogStats, getAllBlogPosts } from "@/data/blog-data";
 
 export default function AdminDashboard() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
 
-  // Mock data - in production, this would come from your backend
+  // Get real blog stats
+  const blogStats = getBlogStats();
+  const recentBlogs = getAllBlogPosts().slice(0, 3);
+
+  // Mock data for proposals - in production, this would come from your backend
   const [stats] = useState({
     totalProposals: 24,
     pendingProposals: 8,
-    totalBlogs: 12,
-    totalViews: 15420
+    totalViews: blogStats.totalViews
   });
 
   const [recentProposals] = useState([
@@ -57,23 +61,6 @@ export default function AdminDashboard() {
       budget: "$5,000+",
       status: "pending",
       date: "2024-01-13"
-    }
-  ]);
-
-  const [recentBlogs] = useState([
-    {
-      id: 1,
-      title: "10 Essential Website Features Every Business Needs in 2024",
-      status: "published",
-      views: 1250,
-      date: "2024-01-15"
-    },
-    {
-      id: 2,
-      title: "How AI Chatbots Can Increase Your Website Conversions",
-      status: "draft",
-      views: 0,
-      date: "2024-01-10"
     }
   ]);
 
@@ -153,9 +140,9 @@ export default function AdminDashboard() {
                 <MessageSquare className="h-4 w-4 text-muted-foreground" />
               </CardHeader>
               <CardContent>
-                <div className="text-2xl font-bold">{stats.totalBlogs}</div>
+                <div className="text-2xl font-bold">{blogStats.total}</div>
                 <p className="text-xs text-muted-foreground">
-                  +2 this week
+                  {blogStats.published} published, {blogStats.draft} drafts
                 </p>
               </CardContent>
             </Card>
@@ -174,7 +161,7 @@ export default function AdminDashboard() {
               <CardContent>
                 <div className="text-2xl font-bold">{stats.totalViews.toLocaleString()}</div>
                 <p className="text-xs text-muted-foreground">
-                  +8% from last month
+                  Blog post views
                 </p>
               </CardContent>
             </Card>
@@ -230,7 +217,7 @@ export default function AdminDashboard() {
                 <CardTitle>Recent Blog Posts</CardTitle>
                 <Button 
                   size="sm"
-                  onClick={() => setLocation("/admin/blogs")}
+                  onClick={() => setLocation("/admin/blogs/new")}
                 >
                   <Plus className="w-4 h-4 mr-1" />
                   New Post
@@ -241,18 +228,28 @@ export default function AdminDashboard() {
                   {recentBlogs.map((blog) => (
                     <div key={blog.id} className="flex items-center justify-between p-3 border border-border rounded-lg">
                       <div className="flex-1">
-                        <h4 className="font-medium text-sm">{blog.title}</h4>
-                        <p className="text-xs text-muted-foreground">{blog.views} views • {blog.date}</p>
+                        <h4 className="font-medium text-sm line-clamp-1">{blog.title}</h4>
+                        <p className="text-xs text-muted-foreground">{blog.views || 0} views • {new Date(blog.date).toLocaleDateString()}</p>
                       </div>
                       <div className="flex items-center space-x-2">
                         <Badge variant={blog.status === "published" ? "default" : "secondary"}>
                           {blog.status}
                         </Badge>
                         <div className="flex space-x-1">
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 w-8 p-0"
+                            onClick={() => window.open(`/blog/${blog.id}`, '_blank')}
+                          >
                             <Eye className="w-3 h-3" />
                           </Button>
-                          <Button size="sm" variant="ghost" className="h-8 w-8 p-0">
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 w-8 p-0"
+                            onClick={() => setLocation(`/admin/blogs/edit/${blog.id}`)}
+                          >
                             <Edit className="w-3 h-3" />
                           </Button>
                         </div>
