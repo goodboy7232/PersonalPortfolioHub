@@ -14,6 +14,14 @@ import FAQ from "@/pages/faq";
 import Proposal from "@/pages/proposal";
 import NotFound from "@/pages/not-found";
 
+// Admin Pages
+import AdminLogin from "@/pages/admin/login";
+import AdminDashboard from "@/pages/admin/dashboard";
+import AdminProposals from "@/pages/admin/proposals";
+import AdminBlogs from "@/pages/admin/blogs";
+import BlogEditor from "@/pages/admin/blog-editor";
+import AdminSettings from "@/pages/admin/settings";
+
 function Router() {
   return (
     <Switch>
@@ -26,6 +34,16 @@ function Router() {
       <Route path="/contact" component={Contact} />
       <Route path="/faq" component={FAQ} />
       <Route path="/proposal" component={Proposal} />
+      
+      {/* Admin Routes */}
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/dashboard" component={AdminDashboard} />
+      <Route path="/admin/proposals" component={AdminProposals} />
+      <Route path="/admin/blogs" component={AdminBlogs} />
+      <Route path="/admin/blogs/new" component={BlogEditor} />
+      <Route path="/admin/blogs/edit/:id" component={BlogEditor} />
+      <Route path="/admin/settings" component={AdminSettings} />
+      
       <Route component={NotFound} />
     </Switch>
   );
